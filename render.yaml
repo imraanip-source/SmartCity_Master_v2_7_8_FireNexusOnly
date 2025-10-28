@@ -5,7 +5,7 @@ services:
     env: node
     buildCommand: npm --prefix utils/dev-suite install
     startCommand: node utils/dev-suite/server.js
-    plan: starter
+    plan: free
     envVars:
       - key: PORT
         value: 10000
