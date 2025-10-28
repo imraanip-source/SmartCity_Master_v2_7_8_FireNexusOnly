@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  devsuite:
+    build: .
+    ports:
+      - '8088:8088'
+    environment:
+      - PORT=8088
+      - FIRENEXUS_API_URL=http://host.docker.internal:9000
+      - FIRENEXUS_API_KEY=DEMO
+      - FIRENEXUS_TENANT_ID=finyl-image-ai
+      - FIRENEXUS_UPLOAD_URL=
+      - FIRENEXUS_UPLOAD_AUTH=
+      - SMTP_HOST=mail.yourdomain.com
+      - SMTP_PORT=587
+      - SMTP_SECURE=false
+      - SMTP_USER=no-reply@yourdomain.com
+      - SMTP_PASS=yourpassword
+      - FROM_EMAIL=no-reply@yourdomain.com
+      - FROM_NAME=Finyl Image AI
+      - TO_EMAIL=owner@yourdomain.com

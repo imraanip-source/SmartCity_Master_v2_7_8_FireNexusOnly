@@ -1,0 +1,57 @@
+
+<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SmartCity — Finyl Image AI</title>
+<style>
+body{margin:0;background:#050a1a;color:#e6f0ff;font-family:Inter,system-ui,sans-serif;overflow:hidden}
+.center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.btn{padding:12px 18px;border-radius:999px;background:#1e78ff;color:#fff;border:0;cursor:pointer}
+.hccp{position:fixed;bottom:40px;right:40px;display:none;gap:8px;background:#0a1630cc;padding:12px 14px;border-radius:14px}
+.card{padding:8px 10px;border-radius:10px;background:#0c1d3e;color:#cfe6ff;cursor:pointer}
+.modal{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center}
+.panel{max-width:600px;background:#0b1836;border:1px solid #204a7a;border-radius:14px;padding:16px}
+.input{width:100%;padding:10px;border-radius:10px;border:1px solid #1b2b49;background:#08122a;color:#cfe6ff}
+.row{display:flex;gap:8px}
+</style></head>
+<body>
+<div class="center"><h2>SmartCity — Finyl Image AI</h2><button id="enter" class="btn">Enter SmartCity</button></div>
+<div id="hccp" class="hccp">
+  <div class="card" id="nmCanvas">Neural Marketing Canvas</div>
+  <div class="card" id="contact">Contact</div>
+</div>
+
+<div id="contactModal" class="modal"><div class="panel">
+  <h3>Contact Us</h3>
+  <div class="row"><input id="cName" class="input" placeholder="Your name"><input id="cEmail" class="input" placeholder="Your email"></div>
+  <div style="margin-top:8px"><textarea id="cMsg" class="input" rows="5" placeholder="Your message"></textarea></div>
+  <div style="margin-top:10px;display:flex;gap:8px">
+    <button id="sendBtn" class="btn">Send</button>
+    <button id="testBtn" class="btn" style="background:#00c2ff;color:#041021">Test Email</button>
+    <button id="closeBtn" class="btn" style="background:#204a7a">Close</button>
+  </div>
+  <div id="cStatus" style="margin-top:10px;color:#bfe4ff"></div>
+</div></div>
+
+<script type="module">
+const hccp=document.getElementById('hccp');const enter=document.getElementById('enter');const contact=document.getElementById('contact');
+const modal=document.getElementById('contactModal');const closeBtn=document.getElementById('closeBtn');
+const sendBtn=document.getElementById('sendBtn');const testBtn=document.getElementById('testBtn');
+const cName=document.getElementById('cName');const cEmail=document.getElementById('cEmail');const cMsg=document.getElementById('cMsg');const cStatus=document.getElementById('cStatus');
+enter.onclick=()=>{hccp.style.display='flex'};contact.onclick=()=>{modal.style.display='flex'};closeBtn.onclick=()=>{modal.style.display='none'};
+sendBtn.onclick=async()=>{
+  cStatus.textContent='Sending...';
+  try{
+    const r=await fetch('/contact/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:cName.value,email:cEmail.value,message:cMsg.value})});
+    const j=await r.json();
+    cStatus.textContent=j.ok?'Sent ✔':'Error: '+(j.error||'failed');
+  }catch(e){cStatus.textContent='Error sending message';}
+};
+testBtn.onclick=async()=>{
+  cStatus.textContent='Testing email...';
+  try{
+    const r=await fetch('/email/test',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const j=await r.json();
+    cStatus.textContent=j.ok?'Test sent ✔ (id '+j.id+')':'Error: '+(j.error||'failed');
+  }catch(e){cStatus.textContent='Test failed';}
+};
+</script>
+</body></html>

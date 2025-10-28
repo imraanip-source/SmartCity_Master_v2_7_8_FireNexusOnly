@@ -1,0 +1,37 @@
+
+services:
+  - type: web
+    name: smartcity-devsuite
+    env: node
+    buildCommand: npm --prefix utils/dev-suite install
+    startCommand: node utils/dev-suite/server.js
+    plan: starter
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: FIRENEXUS_API_URL
+        value: https://api.firenexus.yourdomain
+      - key: FIRENEXUS_API_KEY
+        sync: false
+      - key: FIRENEXUS_TENANT_ID
+        value: finyl-image-ai
+      - key: FIRENEXUS_UPLOAD_URL
+        value: 
+      - key: FIRENEXUS_UPLOAD_AUTH
+        value: 
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: FROM_EMAIL
+        value: no-reply@yourdomain.com
+      - key: FROM_NAME
+        value: Finyl Image AI
+      - key: TO_EMAIL
+        value: owner@yourdomain.com
