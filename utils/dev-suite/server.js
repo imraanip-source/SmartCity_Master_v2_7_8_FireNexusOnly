@@ -117,6 +117,35 @@ ${message}`
     res.status(500).json({ ok:false, error: e?.message || 'send failed' });
   }
 });
+// -------------------- EMAIL TEST ROUTE --------------------
+const nodemailer = require("nodemailer");
+
+app.get("/email/test", async (req, res) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 465),
+      secure: String(process.env.SMTP_SECURE || "true") === "true",
+      auth: {
+        user: process.env.SMTP_USER || process.env.FROM_EMAIL,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM || `"${process.env.FROM_NAME || "Finyl Image AI"}" <${process.env.FROM_EMAIL}>`,
+      to: process.env.TO_EMAIL || process.env.FROM_EMAIL,
+      subject: "SmartCity Email Test",
+      text: "✅ This is a test email from SmartCity FIREneXus. Everything is working perfectly!",
+    });
+
+    console.log("✅ Test email sent successfully");
+    res.status(200).send("OK");
+  } catch (error) {
+    console.error("❌ Email failed:", error);
+    res.status(500).send("Email failed");
+  }
+});
 
 app.listen(PORT, () => {
   console.log('Dev Suite on :' + PORT);
