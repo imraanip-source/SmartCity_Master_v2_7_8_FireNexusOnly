@@ -118,7 +118,6 @@ ${message}`
   }
 });
 // -------------------- EMAIL TEST ROUTE --------------------
-const nodemailer = require("nodemailer");
 
 app.get("/email/test", async (req, res) => {
   try {
