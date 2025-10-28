@@ -7,9 +7,7 @@ services:
     startCommand: node utils/dev-suite/server.js
     plan: free
     envVars:
-      - key: PORT
-        value: 10000
-      - key: FIRENEXUS_API_URL
+       - key: FIRENEXUS_API_URL
         value: https://api.firenexus.yourdomain
       - key: FIRENEXUS_API_KEY
         sync: false
